@@ -7,6 +7,7 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import bcrypt from 'bcryptjs';
 import pkg from 'pg';
 import { indexRouter } from './routes/index.js';
+import { usersRouter } from './routes/signUp.js';
 
 const { Pool } = pkg;
 
@@ -26,6 +27,7 @@ app.use(passport.session());
 
 // Use router
 app.use('/', indexRouter);
+app.use("/", usersRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Express app listening on port ${PORT}!`));
