@@ -2,6 +2,7 @@ import { pool } from "../db/pool.js";
 import { body, query, validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
 
+
 // Error messages
 const alphaErr = "must only contain letters.";
 const lengthErr = "must be between 1 and 10 characters.";
@@ -16,21 +17,25 @@ function capitalize(word) {
 const validateUser = [
   body("firstName")
     .trim()
-    .isAlpha().withMessage(`First name ${alphaErr}`)
-    .isLength({ min: 1, max: 10 }).withMessage(`First name ${lengthErr}`)
+    .isAlpha()
+    .withMessage(`First name ${alphaErr}`)
+    .isLength({ min: 1, max: 10 })
+    .withMessage(`First name ${lengthErr}`)
     .escape(),
 
   body("lastName")
     .trim()
-    .isAlpha().withMessage(`Last name ${alphaErr}`)
-    .isLength({ min: 1, max: 10 }).withMessage(`Last name ${lengthErr}`)
+    .isAlpha()
+    .withMessage(`Last name ${alphaErr}`)
+    .isLength({ min: 1, max: 10 })
+    .withMessage(`Last name ${lengthErr}`)
     .escape(),
 
   body("email")
     .trim()
-    .isEmail().withMessage("Not a valid e-mail address")
+    .isEmail()
+    .withMessage("Not a valid e-mail address")
     .normalizeEmail(),
-
   body("password")
     .trim()
     .isStrongPassword({
@@ -40,9 +45,10 @@ const validateUser = [
       minNumbers: 1,
       minSymbols: 0,
     })
-    .withMessage("Password must be at least 8 characters and include uppercase, lowercase, and a number.")
+    .withMessage(
+      "Password must be at least 8 characters and include uppercase, lowercase, and a number."
+    )
     .escape(),
-
   body("confirmPassword")
     .trim()
     .custom((value, { req }) => value === req.body.password)
@@ -120,9 +126,12 @@ export const usersCreatePost = [
   },
 ];
 
+
 // Controller to render update user page
 export const usersUpdateGet = async (req, res) => {
-  const result = await pool.query("SELECT * FROM users WHERE id = $1", [req.params.id]);
+  const result = await pool.query("SELECT * FROM users WHERE id = $1", [
+    req.params.id,
+  ]);
   const user = result.rows[0];
   res.render("updateUser", { title: "Update user", user });
 };
@@ -136,7 +145,9 @@ export const usersUpdatePost = [
     const userId = req.params.id;
 
     if (!errors.isEmpty()) {
-      const result = await pool.query("SELECT * FROM users WHERE id = $1", [userId]);
+      const result = await pool.query("SELECT * FROM users WHERE id = $1", [
+        userId,
+      ]);
       return res.status(400).render("updateUser", {
         title: "Update user",
         user: result.rows[0],
@@ -173,7 +184,8 @@ export const usersDeletePost = async (req, res) => {
 export const usersSearchGet = [
   query("name")
     .trim()
-    .isAlpha().withMessage("Search must only contain letters.")
+    .isAlpha()
+    .withMessage("Search must only contain letters.")
     .escape(),
   async (req, res) => {
     const errors = validationResult(req);
