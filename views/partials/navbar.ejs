@@ -1,6 +1,6 @@
-<div class="navbar bg-primary drop-shadow-sm">
+<div class="navbar bg-white drop-shadow-sm fixed z-10">
     <div class="flex-1">
-      <a href="/" class="btn btn-ghost text-xl text-white">Members Only</a>
+      <a href="/" class="btn btn-ghost text-xl text-primary">Members Only</a>
     </div>
   
     <div class="flex-none gap-2">
@@ -11,7 +11,7 @@
       <% if (user) { %>
       <div class="dropdown dropdown-end">
         <div tabindex="0" role="button" class="btn btn-ghost btn-rectangle avatar">
-            <ul class="text-white text-lg">
+            <ul class="text-base-400 text-lg">
                 <li><%= user.first_name %></li>
             </ul>
         </div>
