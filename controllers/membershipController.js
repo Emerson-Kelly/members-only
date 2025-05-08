@@ -1,52 +1,51 @@
 import { pool } from "../db/pool.js";
-import { body, query, validationResult } from "express-validator";
-import bcrypt from "bcryptjs";
+import { body, validationResult } from "express-validator";
 
-
-// Error messages
+// Hardcoded membership password
 const memberErr = "Please enter the correct password.";
 const memberPassword = "exclusivemember123";
 
 // Validation rules for user input
 const validateMember = [
-    body("membership-status")
-      .equals(memberPassword)
-      .withMessage(memberErr)
-  ];
+  body("membership-status")
+    .equals(memberPassword)
+    .withMessage(memberErr)
+];
 
 export const membersUpdateGet = async (req, res) => {
-    res.render("pages/members-only", {
-      title: "Create member",
-      errors: [],
-    });
-  };
-  
-  export const membersUpdatePost = [
-      validateMember,
-      async (req, res) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-          return res.status(400).render("pages/members-only", {
-            title: "Members Only",
-            errors: errors.array(),
-          });
-        }
-    
-        try {
-          const userId = req.user.id;
-    
-          await pool.query(
-            `UPDATE users SET membership_status = true WHERE id = $1`,
-            [userId]
-          );
-    
-          res.redirect("/");
-        } catch (err) {
-          console.error(err);
-          res.status(500).render("pages/members-only", {
-            title: "Members Only",
-            errors: [{ msg: "Something went wrong. Please try again." }],
-          });
-        }
-      },
-    ];
+  res.render("pages/members-only", {
+    title: "Create member",
+    errors: [],
+  });
+};
+
+export const membersUpdatePost = [
+  validateMember,
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).render("pages/members-only", {
+        title: "Members Only",
+        errors: errors.array(),
+      });
+    }
+
+    try {
+      const userId = req.user.id;
+
+      // Update the user's membership status in the database
+      await pool.query(
+        `UPDATE users SET membership_status = true WHERE id = $1`,
+        [userId]
+      );
+
+      res.redirect("/");
+    } catch (err) {
+      console.error(err);
+      res.status(500).render("pages/members-only", {
+        title: "Members Only",
+        errors: [{ msg: "Something went wrong. Please try again." }],
+      });
+    }
+  },
+];

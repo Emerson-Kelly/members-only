@@ -10,7 +10,6 @@
 
   <body>
     <%- include('../partials/navbar') %>
-    <!--<div class="hero min-h-screen bg-gradient-to-br from-blue-50 via-indigo-100 to-cyan-100">-->
     <div class="hero min-h-screen bg-base-200">
       <div class="hero-content flex-col w-full max-w-xl">
         <div class="text-center">
@@ -44,12 +43,12 @@
           <% } %>
           <form class="card-body" method="POST" action="/members-only">
             <div class="form-control">
-              <label class="label" for="members-onlyd">
+              <label class="label" for="members-only">
                 <span class="label-text">Password</span>
               </label>
               <input
                 type="password"
-                name="members-only"
+                name="membership-status"
                 placeholder="••••••••"
                 class="input input-bordered"
                 required
