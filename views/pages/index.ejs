@@ -20,13 +20,34 @@
             quasi. In deleniti eaque aut repudiandae et a id nisi.
           </p>
           <% if (user) { %>
-            <a href="/sign-up"><button class="btn btn-primary">Sign Up</button></a>
-            <a href="/login"><button class="btn btn-primary">Log In</button></a>
+            <a href="/new-message"><button class="btn btn-primary">Post</button></a>
             <a href="/members-only"><button class="btn btn-primary">Join</button></a>
-            <% } else { %>
-              <a href="/sign-up"><button class="btn btn-primary">Sign Up</button></a>
-              <a href="/login"><button class="btn btn-primary">Log In</button></a>
-              <% } %>
+
+            <div class="mt-10 space-y-6">
+              <% messages.forEach(function(message) { %>
+                <div class="card w-full max-w-xl mx-auto bg-white border border-gray-200 shadow-sm rounded-2xl">
+                  <div class="card-body p-6">
+                    <div class="flex items-center justify-between mb-2">
+                      <h3 class="text-gray-600 font-medium text-sm">
+                    <span class="text-gray-900"><%= message.first_name %> <%= message.last_name %></span>
+                      </h3>
+                      <span class="text-xs text-gray-400"><%= new Date(message.timestamp).toLocaleDateString() %></span>
+                    </div>
+                    <h2 class="text-xl font-semibold text-gray-900 mb-2">
+                      <%= message.title %>
+                    </h2>
+                    <p class="text-gray-700 leading-relaxed">
+                      <%= message.content %>
+                    </p>
+                  </div>
+                </div>
+              <% }); %>
+            </div>
+            
+                <% } else { %>
+                  <a href="/sign-up"><button class="btn btn-primary">Sign Up</button></a>
+                  <a href="/login"><button class="btn btn-primary">Log In</button></a>
+                  <% } %>
         </div>
       </div>
     </div>

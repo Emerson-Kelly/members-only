@@ -1,0 +1,66 @@
+<!doctype html>
+<html data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/stylesheets/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/output.css">
+    <title>New Message</title>
+</head>
+
+<body>
+    <%- include('../partials/navbar') %>
+        <% if (user) { %>
+            <div class="hero min-h-screen bg-gradient-to-br from-blue-50 via-indigo-100 to-cyan-100">
+                <div class="hero-content flex-col w-full max-w-xl">
+                    <div class="text-center mb-4">
+                        <h1 class="text-5xl font-bold">Create a Post</h1>
+                    </div>
+
+                    <div class="card bg-base-100 w-full shadow-2xl">
+                        <% if (typeof errors !=='undefined' && errors.length> 0) { %>
+                            <div
+                                class="alert alert-error p-4 mb-4 text-red-700 bg-red-100 border border-red-300 rounded">
+                                <ul>
+                                    <% errors.forEach(error=> { %>
+                                        <li>
+                                            <%= error.msg %>
+                                        </li>
+                                        <% }); %>
+                                </ul>
+                            </div>
+                            <% } %>
+                                <form class="card-body" method="POST" action="/new-message">
+                                    <div class="form-control">
+                                        <label class="label" for="title">
+                                            <span class="label-text">Title:</span>
+                                        </label>
+                                        <input type="text" name="title" placeholder="Add a title to the post!"
+                                            class="input input-bordered" required />
+                                    </div>
+                                    <div class="form-control">
+                                        <label class="label" for="content">
+                                            <span class="label-text">Message:</span>
+                                        </label>
+                                        <input type="text" name="content" placeholder="Post a new message here!"
+                                            class="input input-bordered" required />
+                                    </div>
+                                    <div class="form-control mt-6">
+                                        <button type="submit" class="btn btn-primary">Post</button>
+                                    </div>
+                                </form>
+                    </div>
+                </div>
+            </div>
+            <% } else { %>
+                <div class="hero-content flex-col w-full max-w-xl m-auto translate-y-80">
+                    <p class="py-6 text-lg">
+                        Login to post new messages!
+                    </p>
+                    <a href="/login"><button class="btn btn-primary">Log In</button></a>
+                </div>
+                <% } %>
+</body>
+
+</html>
