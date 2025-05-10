@@ -1,12 +1,12 @@
 import { pool } from "../db/pool.js";
 import { body, validationResult } from "express-validator";
 
-const lengthErr = "Must be between 1 and 10 characters.";
+const lengthErr = "Must be between 1 and 280 characters.";
 
 const validateNewMessage = [
-  body("title").isLength({ min: 1, max: 200 }).withMessage(lengthErr),
+  body("title").isLength({ min: 1, max: 280 }).withMessage(lengthErr),
 
-  body("content").isLength({ min: 1, max: 200 }).withMessage(lengthErr),
+  body("content").isLength({ min: 1, max: 280 }).withMessage(lengthErr),
 ];
 
 export const newMessageGet = async (req, res) => {

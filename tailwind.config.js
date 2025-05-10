@@ -9,6 +9,6 @@ export default {
   },
   plugins: [require('daisyui')],
   daisyui: {
-    themes: ["winter"]
+    themes: true, // enables all DaisyUI themes
   }
 }
