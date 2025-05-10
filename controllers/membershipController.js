@@ -11,11 +11,22 @@ const validateMember = [
 ];
 
 export const membersUpdateGet = async (req, res) => {
-  res.render("pages/members-only", {
-    title: "Create member",
-    errors: [],
-  });
-};
+    try {
+      const { rows: allMembers } = await pool.query("SELECT * FROM users WHERE membership_status = true");
+  
+      res.render("pages/members-only", {
+        title: "Create member",
+        users: allMembers,
+        errors: [],
+      });
+    } catch (err) {
+      console.error(err);
+      res.status(500).render("pages/members-only", {
+        title: "Create member",
+        errors: [{ msg: "Something went wrong while loading admins." }],
+      });
+    }
+  };
 
 export const membersUpdatePost = [
   validateMember,
