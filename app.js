@@ -10,6 +10,7 @@ import { usersRouter } from './routes/signUp.js';
 import { membersOnlyRouter } from './routes/membersOnly.js';
 import { loginRouter } from './routes/login.js';
 import { newMessageRouter } from './routes/newMessage.js';
+import { adminRouter } from './routes/admin.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -48,6 +49,7 @@ app.use('/', usersRouter);
 app.use('/', membersOnlyRouter);
 app.use('/', loginRouter);
 app.use('/', newMessageRouter);
+app.use('/', adminRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Express app listening on port ${PORT}!`));

@@ -21,11 +21,11 @@ export const newMessagePost = [
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).render("pages/new-message", {
-            title: "New Message",
-            errors: errors.array(),
-            user: req.user,
-          });
+      return res.status(400).render("pages/new-message", {
+        title: "New Message",
+        errors: errors.array(),
+        user: req.user,
+      });
     }
 
     try {
@@ -35,14 +35,30 @@ export const newMessagePost = [
         `INSERT INTO messages (user_id, title, content) VALUES ($1, $2, $3)`,
         [userId, req.body.title, req.body["content"]]
       );
-      
+
       res.redirect("/");
     } catch (err) {
       console.error(err);
-      res.status(500).render("pages/new-message",  {
+      res.status(500).render("pages/new-message", {
         title: "New Message",
         errors: [{ msg: "Something went wrong. Please try again." }],
       });
     }
   },
 ];
+
+export const deleteMessage = async (req, res) => {
+  const postId = req.params.id;
+
+  if (!req.user || !req.user.admin) {
+    return res.status(403).send("Forbidden: Admins only.");
+  }
+
+  try {
+    await pool.query("DELETE FROM messages WHERE id = $1", [postId]);
+    res.redirect("/");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Failed to delete the post.");
+  }
+};

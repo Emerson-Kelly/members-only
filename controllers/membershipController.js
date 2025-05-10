@@ -1,11 +1,9 @@
 import { pool } from "../db/pool.js";
 import { body, validationResult } from "express-validator";
 
-// Hardcoded membership password
 const memberErr = "Please enter the correct password.";
 const memberPassword = "exclusivemember123";
 
-// Validation rules for user input
 const validateMember = [
   body("membership-status")
     .equals(memberPassword)
@@ -33,7 +31,6 @@ export const membersUpdatePost = [
     try {
       const userId = req.user.id;
 
-      // Update the user's membership status in the database
       await pool.query(
         `UPDATE users SET membership_status = true WHERE id = $1`,
         [userId]

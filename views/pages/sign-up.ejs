@@ -2,72 +2,82 @@
 <html data-theme="light">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="/stylesheets/style.css" rel="stylesheet">
-  <link rel="stylesheet" href="/stylesheets/output.css">
-  <title>Sign Up</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/stylesheets/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/output.css">
+    <title>Sign Up</title>
 </head>
 
 <body>
     <%- include('../partials/navbar') %>
-    <div class="hero min-h-screen bg-gradient-to-br from-blue-50 via-indigo-100 to-cyan-100">
-    <div class="hero-content flex-col w-full max-w-xl">
-      <div class="text-center">
-        <h1 class="text-5xl font-bold">Join the Club!</h1>
-        <p class="py-6 text-lg">
-            Sign up in seconds and get access to thoughtful conversations, shared insights, and a growing community of people like you.
-        </p>
-      </div>
+        <div class="hero min-h-screen bg-gradient-to-br from-blue-50 via-indigo-100 to-cyan-100">
+            <div class="hero-content flex-col w-full max-w-xl">
+                <div class="text-center">
+                    <h1 class="text-5xl font-bold">Join the Club!</h1>
+                    <p class="py-6 text-lg">
+                        Sign up in seconds and get access to thoughtful conversations, shared insights, and a growing
+                        community of people like you.
+                    </p>
+                </div>
 
-      <div class="card bg-base-100 w-full shadow-2xl">
-        <% if (typeof errors !== 'undefined' && errors.length > 0) { %>
-            <div class="alert alert-error p-4 mb-4 text-red-700 bg-red-100 border border-red-300 rounded">
-              <ul>
-                <% errors.forEach(error => { %>
-                  <li><%= error.msg %></li>
-                <% }); %>
-              </ul>
+                <div class="card bg-base-100 w-full shadow-2xl">
+                    <% if (typeof errors !=='undefined' && errors.length> 0) { %>
+                        <div class="alert alert-error p-4 mb-4 text-red-700 bg-red-100 border border-red-300 rounded">
+                            <ul>
+                                <% errors.forEach(error=> { %>
+                                    <li>
+                                        <%= error.msg %>
+                                    </li>
+                                    <% }); %>
+                            </ul>
+                        </div>
+                        <% } %>
+                            <form class="card-body" method="POST" action="/sign-up">
+                                <div class="grid grid-cols-2 gap-6">
+                                    <div class="form-control">
+                                        <label class="label" for="firstName">
+                                            <span class="label-text">First Name</span>
+                                        </label>
+                                        <input type="text" name="firstName" placeholder="John"
+                                            class="input input-bordered" required />
+                                    </div>
+                                    <div class="form-control">
+                                        <label class="label" for="lastName">
+                                            <span class="label-text">Last Name</span>
+                                        </label>
+                                        <input type="text" name="lastName" placeholder="Doe"
+                                            class="input input-bordered" required />
+                                    </div>
+                                </div>
+                                <div class="form-control">
+                                    <label class="label" for="email">
+                                        <span class="label-text">Email</span>
+                                    </label>
+                                    <input type="email" name="email" placeholder="you@example.com"
+                                        class="input input-bordered" required />
+                                </div>
+                                <div class="form-control">
+                                    <label class="label" for="password">
+                                        <span class="label-text">Password</span>
+                                    </label>
+                                    <input type="password" name="password" placeholder="••••••••"
+                                        class="input input-bordered" required />
+                                </div>
+                                <div class="form-control">
+                                    <label class="label" for="confirmPassword">
+                                        <span class="label-text">Confirm Password</span>
+                                    </label>
+                                    <input type="password" name="confirmPassword" placeholder="••••••••"
+                                        class="input input-bordered" required />
+                                </div>
+                                <div class="form-control mt-6">
+                                    <button type="submit" class="btn btn-primary">Create Account</button>
+                                </div>
+                            </form>
+                </div>
             </div>
-          <% } %>
-        <form class="card-body" method="POST" action="/sign-up">
-          <div class="form-control">
-            <label class="label" for="firstName">
-              <span class="label-text">First Name</span>
-            </label>
-            <input type="text" name="firstName" placeholder="John" class="input input-bordered" required />
-          </div>
-          <div class="form-control">
-            <label class="label" for="lastName">
-              <span class="label-text">Last Name</span>
-            </label>
-            <input type="text" name="lastName" placeholder="Doe" class="input input-bordered" required />
-          </div>
-          <div class="form-control">
-            <label class="label" for="email">
-              <span class="label-text">Email</span>
-            </label>
-            <input type="email" name="email" placeholder="you@example.com" class="input input-bordered" required />
-          </div>
-          <div class="form-control">
-            <label class="label" for="password">
-              <span class="label-text">Password</span>
-            </label>
-            <input type="password" name="password" placeholder="••••••••" class="input input-bordered" required />
-          </div>
-          <div class="form-control">
-            <label class="label" for="confirmPassword">
-              <span class="label-text">Confirm Password</span>
-            </label>
-            <input type="password" name="confirmPassword" placeholder="••••••••" class="input input-bordered" required />
-          </div>
-          <div class="form-control mt-6">
-            <button type="submit" class="btn btn-primary">Create Account</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
+        </div>
 </body>
 
 </html>
