@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/stylesheets/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/stylesheets/output.css" />
+    <title>404 - Page Not Found</title>
+  </head>
+
+  <body>
+    <%- include('../partials/navbar') %>
+
+    <div class="flex flex-col items-center justify-center min-h-screen bg-base-200 px-4">
+      <h1 class="text-7xl font-bold text-error mb-4">404</h1>
+      <h2 class="text-2xl font-semibold text-gray-800 mb-2">Page Not Found</h2>
+      <p class="text-gray-600 mb-6 text-center">
+        Sorry, the page you're looking for doesn’t exist or has been moved.
+      </p>
+      <a href="/" class="btn btn-primary">Go Home</a>
+    </div>
+  </body>
+</html>

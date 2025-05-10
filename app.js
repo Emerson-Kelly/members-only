@@ -51,5 +51,9 @@ app.use('/', loginRouter);
 app.use('/', newMessageRouter);
 app.use('/', adminRouter);
 
+app.use((req, res, next) => {
+    res.status(404).render("pages/404");
+  });
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Express app listening on port ${PORT}!`));
