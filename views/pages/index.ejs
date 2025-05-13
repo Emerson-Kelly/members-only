@@ -19,8 +19,13 @@
         <div class="flex justify-between flex-wrap items-center mb-6 gap-4">
           <h1 class="text-3xl font-bold">Welcome back, <%= user.first_name %>!</h1>
           <div class="flex gap-2">
-            <a href="/new-message" class="btn btn-primary">New Post</a>
+            <% if (!user.membership_status) { %>
             <a href="/members-only" class="btn btn-outline">Join Club</a>
+            <% } %>
+            <% if (!user.admin && user.membership_status) { %>
+             <a href="/admin" class="btn btn-outline">Admin</a>
+             <% } %>
+             <a href="/new-message" class="btn btn-primary">New Post</a>
           </div>
         </div>
 
