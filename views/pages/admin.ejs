@@ -12,9 +12,10 @@
     <%- include('../partials/navbar') %>
     <div class="hero min-h-screen bg-base-200 block">
       <div class="hero-content flex-col w-full max-w-1xl">
-          <% if (user) { %>
-        <% if (user.admin) { %>
-            <div class="overflow-x-auto mt-20 w-full">
+        <% if (user) { %>
+            <% if (user.admin && user.membership_status) { %>
+              <!-- Admin Dashboard -->
+              <div class="overflow-x-auto mt-20 w-full">
                 <h2 class="text-2xl font-bold mb-4 text-center">Admin Users Dashboard</h2>
                 <table class="table-auto w-full border-collapse border border-gray-300 bg-white rounded-lg shadow-sm">
                   <thead class="bg-gray-100">
@@ -37,38 +38,49 @@
                   </tbody>
                 </table>
               </div>
-              
-        <% } else { %>
-          <div class="card bg-base-100 max-w-screen-sm shadow-2xl mt-20">
-            <% if (typeof errors !== 'undefined' && errors.length > 0) { %>
-              <div class="alert alert-error p-4 mb-4 text-red-700 bg-red-100 border border-red-300 rounded">
-                <ul>
-                  <% errors.forEach(error => { %>
-                    <li><%= error.msg %></li>
-                  <% }); %>
-                </ul>
+          
+            <% } else if (!user.admin && user.membership_status) { %>
+              <!-- Eligible to become admin -->
+              <div class="card bg-base-100 max-w-screen-sm shadow-2xl mt-20">
+                <% if (typeof errors !== 'undefined' && errors.length > 0) { %>
+                  <div class="alert alert-error p-4 mb-4 text-red-700 bg-red-100 border border-red-300 rounded">
+                    <ul>
+                      <% errors.forEach(error => { %>
+                        <li><%= error.msg %></li>
+                      <% }); %>
+                    </ul>
+                  </div>
+                <% } %>
+                <form class="card-body" method="POST" action="/admin">
+                  <h1 class="text-5xl font-bold">Want to become an admin?</h1>
+                  <p class="pt-6 text-lg">
+                    Admins help keep our community safe and thriving by moderating content and managing posts.
+                  </p>
+                  <div class="form-control mt-6">
+                    <button type="submit" class="btn btn-primary">
+                      Become an Admin
+                    </button>
+                  </div>
+                </form>
+              </div>
+          
+            <% } else { %>
+              <!-- Not a member -->
+              <div class="card bg-base-100 max-w-screen-sm shadow-2xl mt-20 p-6 text-center">
+                <h1 class="text-5xl font-bold">Want to become an admin?</h1>
+                <p class="pt-6 text-lg text-gray-700">You must become a member first!</p>
+                <div class="form-control mt-6">
+                  <a href="/members-only" class="btn btn-primary">Join Club</a>
+                </div>
               </div>
             <% } %>
-            <form class="card-body" method="POST" action="/admin">
-              <h1 class="text-5xl font-bold">Want to become an admin?</h1>
-              <p class="pt-6 text-lg">
-                Admins help keep our community safe and thriving by moderating content and managing posts. Admin privileges give you access to delete inappropriate or off-topic messages.
-              </p>
-              <div class="form-control mt-6">
-                <button type="submit" class="btn btn-primary">
-                  Request Admin Access
-                </button>
-              </div>
-            </form>
-          </div>
-        <% } %>
-
-        <% } else { %>
-          <div class="text-center mt-20">
-            <a href="/sign-up"><button class="btn btn-primary m-2">Sign Up</button></a>
-            <a href="/login"><button class="btn btn-primary m-2">Log In</button></a>
-          </div>
-        <% } %>
+          <% } else { %>
+            <!-- Not logged in -->
+            <div class="text-center mt-20">
+              <a href="/sign-up" class="btn btn-primary m-2">Sign Up</a>
+              <a href="/login" class="btn btn-primary m-2">Log In</a>
+            </div>
+          <% } %>
       </div>
     </div>
   </body>
