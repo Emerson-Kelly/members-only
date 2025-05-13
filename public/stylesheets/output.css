@@ -3441,6 +3441,18 @@ html {
   padding-top: 1.5rem;
 }
 
+.pt-\[0\] {
+  padding-top: 0;
+}
+
+.pt-\[60\] {
+  padding-top: 60;
+}
+
+.pt-\[60px\] {
+  padding-top: 60px;
+}
+
 .text-left {
   text-align: left;
 }

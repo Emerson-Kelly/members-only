@@ -4,3 +4,9 @@ body {
     width: 100vw;
     letter-spacing: 105%;
 }
+
+@media only screen and (max-width: 600px) {
+    .sign-up {
+        padding-top: 60px;
+    }
+  }
