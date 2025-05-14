@@ -5,29 +5,29 @@ import { pool } from "../db/pool.js";
 
 // Configure Local Strategy
 passport.use(
-  new LocalStrategy(
-    { usernameField: "email" },
-    async (email, password, done) => {
+    new LocalStrategy({ usernameField: "email" }, async (email, password, done) => {
       try {
         const result = await pool.query("SELECT * FROM users WHERE username = $1", [email]);
-        const user = result.rows[0];
-
-        if (!user) {
+  
+        if (result.rows.length === 0) {
           return done(null, false, { message: "Incorrect email." });
         }
-
+  
+        const user = result.rows[0];
+  
         const isMatch = await bcrypt.compare(password, user.password_hash);
         if (!isMatch) {
           return done(null, false, { message: "Incorrect password." });
         }
-
+  
         return done(null, user);
       } catch (err) {
+        console.error("Login error:", err);
         return done(err);
       }
-    }
-  )
-);
+    })
+  );
+  
 
 // Serialize user into the session
 passport.serializeUser((user, done) => {
