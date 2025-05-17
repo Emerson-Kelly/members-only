@@ -21,8 +21,9 @@ const PgSession = pgSession(session);
 app.use(
   session({
     store: new PgSession({
-      pool: pool,
-      tableName: "session",
+        pool: pool,
+        tableName: "session",
+        createTableIfMissing: true,
     }),
     secret: "your-secret-key",
     resave: false,
